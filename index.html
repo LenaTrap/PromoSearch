@@ -5,63 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produkty z gazetki</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f5f5f5;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-      align-items: center;
-    }
-    #search {
-      padding: 8px 10px;
-      width: 100%;
-      max-width: 300px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button, select {
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      background-color: white;
-    }
-    button:hover, select:hover {
-      background-color: #eee;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background-color: white;
-      border-radius: 8px;
-      padding: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      border: 1px solid #ccc;
-      transition: all 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 1.2rem;
-    }
-    .card p {
-      margin: 5px 0;
-    }
+    body { font-family: Arial; padding: 20px; background-color: #f5f5f5; }
+    h1 { font-size: 2rem; margin-bottom: 20px; }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; align-items: center; }
+    #search { padding: 8px 10px; width: 100%; max-width: 300px; border-radius: 5px; border: 1px solid #ccc; }
+    button, select { padding: 5px 10px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; background-color: white; }
+    button:hover, select:hover { background-color: #eee; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .card { background-color: white; border-radius: 8px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #ccc; transition: all 0.2s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+    .card p { margin: 5px 0; }
   </style>
 </head>
 <body>
@@ -69,10 +23,8 @@
 
   <div class="controls">
     <input type="text" id="search" placeholder="Wyszukaj produkt..." oninput="searchProducts(this.value)" />
-
     <button onclick="sortProducts('asc')">Od najtańszych</button>
     <button onclick="sortProducts('desc')">Od najdroższych</button>
-
     <label>Filtruj po sklepie:</label>
     <select onchange="filterByShop(this.value)">
       <option value="">Wszystkie</option>
@@ -81,72 +33,43 @@
     </select>
   </div>
 
-  <div id="produkty" class="grid">
-    Ładowanie produktów...
-  </div>
+  <div id="produkty" class="grid">Ładowanie produktów...</div>
 
   <script>
     let produktyData = [];
     const container = document.getElementById('produkty');
 
-    // Pobranie danych z backendu
     fetch('http://192.168.1.27:8000/produkty')
       .then(res => res.json())
       .then(data => {
-        if (data.error) {
-          container.innerHTML = `Błąd backendu: ${data.error}`;
-          return;
-        }
+        if (data.error) { container.innerHTML = `Błąd backendu: ${data.error}`; return; }
         produktyData = data;
         renderProducts(produktyData);
       })
-      .catch(err => {
-        container.innerHTML = 'Błąd pobierania danych!';
-        console.error(err);
-      });
+      .catch(err => { container.innerHTML = 'Błąd pobierania danych!'; console.error(err); });
 
-    // Renderowanie produktów
     function renderProducts(data) {
       container.innerHTML = '';
       data.forEach(p => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `
-          <h3>${p.nazwa}</h3>
-          <p><strong>${p.cena} zł</strong></p>
-          ${p.opis ? `<p>${p.opis}</p>` : ''}
-          <p><em>${p.sklep}</em></p>
-        `;
+        card.innerHTML = `<h3>${p.nazwa}</h3><p><strong>${p.cena} zł</strong></p>${p.opis ? `<p>${p.opis}</p>` : ''}<p><em>${p.sklep}</em></p>`;
         container.appendChild(card);
       });
-      if (data.length === 0) {
-        container.innerHTML = '<p>Nie znaleziono produktów.</p>';
-      }
+      if (data.length === 0) container.innerHTML = '<p>Nie znaleziono produktów.</p>';
     }
 
-    // Sortowanie po cenie
     function sortProducts(order) {
-      const sorted = [...produktyData].sort((a, b) =>
-        order === 'asc' ? a.cena - b.cena : b.cena - a.cena
-      );
+      const sorted = [...produktyData].sort((a,b) => order==='asc' ? a.cena-b.cena : b.cena-a.cena);
       renderProducts(sorted);
     }
 
-    // Filtr po sklepie
     function filterByShop(shop) {
-      if (!shop) {
-        renderProducts(produktyData);
-      } else {
-        renderProducts(produktyData.filter(p => p.sklep === shop));
-      }
+      renderProducts(shop ? produktyData.filter(p=>p.sklep===shop) : produktyData);
     }
 
-    // Wyszukiwanie produktów
     function searchProducts(query) {
-      const filtered = produktyData.filter(p =>
-        p.nazwa.toLowerCase().includes(query.toLowerCase())
-      );
-      renderProducts(filtered);
+      renderProducts(produktyData.filter(p=>p.nazwa.toLowerCase().includes(query.toLowerCase())));
     }
   </script>
 </body>
