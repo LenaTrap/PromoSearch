@@ -39,7 +39,7 @@
     let produktyData = [];
     const container = document.getElementById('produkty');
 
-    fetch('http://192.168.1.27:8000/produkty')
+    fetch('https://abc123.ngrok.io/produkty')
       .then(res => res.json())
       .then(data => {
         if (data.error) { container.innerHTML = `Błąd backendu: ${data.error}`; return; }
