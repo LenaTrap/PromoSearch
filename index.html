@@ -54,7 +54,7 @@
           card.innerHTML = `
             <h3>${p.nazwa}</h3>
             <p><strong>${p.cena} zł</strong></p>
-            ${p.opis ? <p>${p.opis}</p> : ''}
+            ${p.opis ? `<p>${p.opis}</p>` : ''}
           `;
           container.appendChild(card);
         });
