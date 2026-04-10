@@ -256,9 +256,20 @@
     });
 
     function filterByShop(shop) {
+      const selected = document.querySelector('.selected');
+
+      if (shop === '') selected.textContent = 'Wszystkie sklepy';
+      else selected.textContent = shop;
+
       if (!shop) renderProducts(produktyData);
       else renderProducts(produktyData.filter(p => p.sklep === shop));
     }
+    
+    document.querySelectorAll('.option').forEach(opt => {
+     opt.addEventListener('click', () => {
+        document.getElementById('dropdown').classList.add('hidden');
+      });
+    });
   </script>
 
 </body>
