@@ -1,166 +1,317 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background: #F6EDEF;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 35px;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #DFF6DF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 100px;
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* LEFT */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(#AFF1D6, #81E8D9);
+}
+
+/* RIGHT */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(#AFF1D6, #81E8D9);
 }
 
 h1 {
-    margin: 15px 0 10px;
-    font-size: 2.5rem;
-    text-align: center;
-    color: #B15959;
+  margin: 20px 0 15px;
+  font-size: 3.1rem;
+  text-align: center;
+  color: #79D6E6;
 }
 
 .controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 input, select, button {
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: 0.2s;
-    background: #FBD7D7;
-    color: #B15959;
+  padding: 13px 18px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: 0.2s;
+  background: #AFF1D6;
+  color: #79D6E6;
+  font-size: 1.1rem;
 }
 
 input:focus {
-    outline: none;
-    transform: scale(1.03);}
+  outline: none;
+  transform: scale(1.03);
+}
 
 button {
-    background: #B15959;
-    color: #F6EDEF;
+  background: #79D6E6;
+  color: #DFF6DF;
 }
 
 button:hover {
-    background: #FEAEAE;
-    cursor: pointer;
+  background: #81E8D9;
+  cursor: pointer;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
-    width: 100%;
-    padding: 0 20px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 25px 50px;
 }
 
 .card {
-    background: #FBD7D7;
-    padding: 15px;
-    border-radius: 16px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    text-align: center;
-    transition: 0.3s;
-    position: relative;
-    overflow: hidden;
-    color: #B15959;
+  background: #B6FBD3;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+  color: #79D6E6;
 }
 
 .card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
 }
 
 .price {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #B15959;
-    margin: 10px 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #79D6E6;
+  margin: 14px 0;
 }
 
 .shop {
-    font-size: 0.9rem;
-    color: #B15959;
-    opacity: 0.7;
+  font-size: 1.05rem;
+  color: #81E8D9;
 }
 
 .tag {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #FEAEAE;
-    color: #B15959;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #79D6E6;
+  color: #DFF6DF;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
 }
 
 a {
-    margin-bottom: 30px;
-    text-decoration: none;
-    color: #B15959;
-    font-weight: bold;
+  margin-bottom: 40px;
+  text-decoration: none;
+  color: #79D6E6;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .custom-select {
-    position: relative;
-    min-width: 200px;
+  position: relative;
+  min-width: 240px;
 }
 
 .selected {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: #FBD7D7;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    cursor: pointer;
-    color: #B15959;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  background: #AFF1D6;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+  color: #79D6E6;
+  font-size: 1.1rem;
 }
 
 .selected img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .dropdown {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    right: 0;
-    background: #FBD7D7;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    overflow: hidden;
-    z-index: 10;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: #AFF1D6;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 10;
 }
 
 .dropdown.hidden {
-    display: none;
+  display: none;
 }
 
 .option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.2s;
-    color: #B15959;
-}
-
-.option:hover {
-    background: #FEAEAE;
-    color: #B15959;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  color: #79D6E6;
 }
 
 .option img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.option:hover {
+  background: #81E8D9;
+  color: #79D6E6;
+}
+
+.theme-btn {
+  position: fixed;
+  top: 20px;
+  right: 270px; /* omija prawy pasek */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.theme-btn img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.4s ease;
+}
+
+body,
+h1,
+.controls,
+input,
+select,
+button,
+.card,
+.price,
+.shop,
+.selected,
+.dropdown,
+.option,
+a {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              box-shadow 0.4s ease,
+              transform 0.3s ease;
+}
+
+body::before,
+body::after {
+  transition: background 0.4s ease,
+              color 0.4s ease,
+              box-shadow 0.4s ease,
+              transform 0.3s ease;
+}
+
+body.dark::before,
+body.dark::after {
+  opacity: 0.5;
+}
+
+body.dark {
+  background: #0b0f0d;
+}
+
+/* teksty */
+body.dark h1 {
+  color: #79D6E6; 
+}
+
+/* inputy */
+input,
+select,
+.selected {
+  border: 1px solid transparent;
+}
+
+body.dark input,
+body.dark select,
+body.dark .selected {
+  background: #121816;
+  color: #DFF6DF;
+  border: 1px solid #79D6E6;
+}
+
+/* przyciski */
+body.dark button {
+  background: #1b2a25;
+  color: #79D6E6;
+  border: 1px solid #79D6E6;
+}
+
+body.dark button:hover {
+  box-shadow: 0 0 10px rgba(121, 214, 230, 0.4);
+}
+
+/* karty */
+body.dark .card {
+  background: #121816;
+  color: #DFF6DF;
+}
+
+/* cena */
+body.dark .price {
+  color: #7de3b1;
+}
+
+/* sklep */
+body.dark .shop {
+  color: #81E8D9; 
+}
+
+/* dropdown */
+body.dark .dropdown {
+  background: #1a1f1c;
+}
+
+body.dark .option:hover {
+  background: #2a3a33;
+}
+
+/* link */
+body.dark a {
+  color: #79D6E6;
+}
+
+body.dark .theme-btn img {
+  transform: rotate(180deg);
+}
+
+body.dark .tag {
+  background: #79D6E6;
+  color: #0b0f0d;
+  box-shadow: 0 0 12px #79D6E6;
 }
