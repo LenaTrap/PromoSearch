@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromoSearch</title>
+  <title>Produkty z gazetki</title>
 
   <style>
     body {
@@ -14,11 +14,11 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding-top: 50px;
+      padding-top: 35px;
     }
 
     h1 {
-      margin: 30px 0 10px;
+      margin: 15px 0 10px;
       font-size: 2.5rem;
       text-align: center;
     }
@@ -51,6 +51,7 @@
 
     button:hover {
       background: #444;
+      transform: translateY(-2px);
       cursor: pointer;
     }
 
@@ -109,6 +110,54 @@
       font-weight: bold;
     }
 
+    .custom-select {
+      position: relative;
+      min-width: 200px;
+    }
+
+    .selected {
+      padding: 10px 14px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      right: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .dropdown.hidden {
+      display: none;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option:hover {
+      background: #f2f2f2;
+    }
+
+    .option img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
   </style>
 </head>
 
@@ -122,15 +171,24 @@
     <button onclick="sortProducts('asc')">⬇ Najtańsze</button>
     <button onclick="sortProducts('desc')">⬆ Najdroższe</button>
 
-    <select onchange="filterByShop(this.value)">
-      <option value="">Wszystkie sklepy</option>
-      <option value="Lidl">Lidl</option>
-      <option value="Biedronka">Biedronka</option>
-    </select>
+    <div class="custom-select">
+  <div class="selected" onclick="toggleDropdown()">Wszystkie sklepy</div>
+  <div id="dropdown" class="dropdown hidden">
+    <div class="option" onclick="filterByShop('')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Lidl-Logo.svg" /> Wszystkie sklepy
+    </div>
+    <div class="option" onclick="filterByShop('Lidl')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Lidl-Logo.svg" /> Lidl
+    </div>
+    <div class="option" onclick="filterByShop('Biedronka')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Biedronka_logo.svg" /> Biedronka
+    </div>
+  </div>
+</div>
   </div>
 
   <div id="produkty" class="grid">
-    <p>Ładowanie produktów...</p> 
+    <p>Ładowanie produktów...</p>
   </div>
 
   <script>
@@ -186,6 +244,17 @@
       );
       renderProducts(sorted);
     }
+
+    function toggleDropdown() {
+      document.getElementById('dropdown').classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('dropdown');
+      if (!e.target.closest('.custom-select')) {
+        dropdown.classList.add('hidden');
+      }
+    });
 
     function filterByShop(shop) {
       if (!shop) renderProducts(produktyData);
