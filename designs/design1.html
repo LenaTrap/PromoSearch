@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Produkty z gazetki</title>
+  <title>PromoSearch</title>
 
   <style>
     body {
@@ -51,7 +51,6 @@
 
     button:hover {
       background: #444;
-      transform: translateY(-2px);
       cursor: pointer;
     }
 
@@ -175,13 +174,13 @@
   <div class="selected" onclick="toggleDropdown()">Wszystkie sklepy</div>
   <div id="dropdown" class="dropdown hidden">
     <div class="option" onclick="filterByShop('')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Lidl-Logo.svg" /> Wszystkie sklepy
+      Wszystkie sklepy
     </div>
     <div class="option" onclick="filterByShop('Lidl')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Lidl-Logo.svg" /> Lidl
+      <img src="/zdj/lidl.png" /> Lidl
     </div>
     <div class="option" onclick="filterByShop('Biedronka')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Biedronka_logo.svg" /> Biedronka
+      <img src="/zdj/biedronka.png" /> Biedronka
     </div>
   </div>
 </div>
