@@ -7,61 +7,119 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f5f5f5;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #f5f5f5, #eaeaea);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h1 {
-      margin-bottom: 20px;
+      margin: 30px 0 10px;
+      font-size: 2.5rem;
+      text-align: center;
     }
 
     .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
     }
 
     input, select, button {
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      transform: scale(1.03);
+    }
+
+    button {
+      background: #222;
+      color: white;
     }
 
     button:hover {
-      background-color: #eee;
+      background: #444;
+      transform: translateY(-2px);
       cursor: pointer;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
+      max-width: 1000px;
+      width: 100%;
+      padding: 0 20px 40px;
     }
 
     .card {
       background: white;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card h3 {
-      margin-bottom: 10px;
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
+
+    .price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #27ae60;
+      margin: 10px 0;
+    }
+
+    .shop {
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4757;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+
+    a {
+      margin-bottom: 30px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 
 <body>
 
-  <h1>Produkty z gazetki</h1>
+  <h1>🛒 Produkty z gazetki</h1>
 
   <div class="controls">
-    <input type="text" placeholder="Szukaj..." oninput="searchProducts(this.value)">
+    <input type="text" placeholder="Szukaj produktu..." oninput="searchProducts(this.value)">
 
-    <button onclick="sortProducts('asc')">Najtańsze</button>
-    <button onclick="sortProducts('desc')">Najdroższe</button>
+    <button onclick="sortProducts('asc')">⬇ Najtańsze</button>
+    <button onclick="sortProducts('desc')">⬆ Najdroższe</button>
 
     <select onchange="filterByShop(this.value)">
       <option value="">Wszystkie sklepy</option>
@@ -78,23 +136,18 @@
     let produktyData = [];
     const container = document.getElementById('produkty');
 
-    // 🔥 TWÓJ PUBLICZNY LINK NGROK
     fetch('https://unestimable-bibi-helically.ngrok-free.dev/produkty', {
-      headers: {
-        "ngrok-skip-browser-warning": "true"
-      }
+      headers: { "ngrok-skip-browser-warning": "true" }
     })
     .then(res => res.json())
     .then(data => {
       produktyData = data;
       renderProducts(produktyData);
     })
-    .catch(err => {
-      container.innerHTML = 'Błąd pobierania danych!';
-      console.error(err);
+    .catch(() => {
+      container.innerHTML = '<p>Błąd pobierania danych!</p>';
     });
 
-    // Render produktów
     function renderProducts(data) {
       container.innerHTML = '';
 
@@ -108,9 +161,10 @@
         card.className = 'card';
 
         card.innerHTML = `
+          <div class="tag">PROMO</div>
           <h3>${p.nazwa}</h3>
-          <p><strong>${p.cena} zł</strong></p>
-          <p>${p.sklep}</p>
+          <div class="price">${p.cena} zł</div>
+          <div class="shop">${p.sklep}</div>
           ${p.opis ? `<p>${p.opis}</p>` : ''}
         `;
 
@@ -118,7 +172,6 @@
       });
     }
 
-    // Wyszukiwanie
     function searchProducts(query) {
       const filtered = produktyData.filter(p =>
         p.nazwa.toLowerCase().includes(query.toLowerCase())
@@ -126,7 +179,6 @@
       renderProducts(filtered);
     }
 
-    // Sortowanie
     function sortProducts(order) {
       const sorted = [...produktyData].sort((a, b) =>
         order === 'asc' ? a.cena - b.cena : b.cena - a.cena
@@ -134,15 +186,11 @@
       renderProducts(sorted);
     }
 
-    // Filtrowanie po sklepie
     function filterByShop(shop) {
-      if (!shop) {
-        renderProducts(produktyData);
-      } else {
-        renderProducts(produktyData.filter(p => p.sklep === shop));
-      }
+      if (!shop) renderProducts(produktyData);
+      else renderProducts(produktyData.filter(p => p.sklep === shop));
     }
   </script>
-<a href="/designs/design1.html">design1</a></p>
+
 </body>
 </html>
