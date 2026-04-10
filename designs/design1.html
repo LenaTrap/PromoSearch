@@ -4,160 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromoSearch</title>
-
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: linear-gradient(135deg, #f5f5f5, #eaeaea);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 35px;
-    }
-
-    h1 {
-      margin: 15px 0 10px;
-      font-size: 2.5rem;
-      text-align: center;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
-
-    input, select, button {
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: none;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: 0.2s;
-    }
-
-    input:focus {
-      outline: none;
-      transform: scale(1.03);
-    }
-
-    button {
-      background: #222;
-      color: white;
-    }
-
-    button:hover {
-      background: #444;
-      cursor: pointer;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      width: 100%;
-      padding: 0 20px 40px;
-    }
-
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 16px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      text-align: center;
-      transition: 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-
-    .price {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #27ae60;
-      margin: 10px 0;
-    }
-
-    .shop {
-      font-size: 0.9rem;
-      color: #777;
-    }
-
-    .tag {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #ff4757;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-    }
-
-    a {
-      margin-bottom: 30px;
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-    }
-
-    .custom-select {
-      position: relative;
-      min-width: 200px;
-    }
-
-    .selected {
-      padding: 10px 14px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .dropdown {
-      position: absolute;
-      top: 110%;
-      left: 0;
-      right: 0;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      overflow: hidden;
-      z-index: 10;
-    }
-
-    .dropdown.hidden {
-      display: none;
-    }
-
-    .option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .option:hover {
-      background: #f2f2f2;
-    }
-
-    .option img {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-    }
-  </style>
+  <link rel="stylesheet" href="/designs/design1.css">
 </head>
 
 <body>
@@ -171,10 +18,13 @@
     <button onclick="sortProducts('desc')">⬆ Najdroższe</button>
 
     <div class="custom-select">
-  <div class="selected" onclick="toggleDropdown()">Wszystkie sklepy</div>
+  <div class="selected" onclick="toggleDropdown()">
+    <img id="selectedLogo" src="/zdj/all.png" />
+    <span id="selectedText">Wszystkie sklepy</span>
+  </div>
   <div id="dropdown" class="dropdown hidden">
     <div class="option" onclick="filterByShop('')">
-      Wszystkie sklepy
+      <img src="/zdj/all.png" />Wszystkie sklepy
     </div>
     <div class="option" onclick="filterByShop('Lidl')">
       <img src="/zdj/lidl.png" /> Lidl
@@ -256,15 +106,28 @@
     });
 
     function filterByShop(shop) {
-      const selected = document.querySelector('.selected');
+      const text = document.getElementById('selectedText');
+      const logo = document.getElementById('selectedLogo');
 
-      if (shop === '') selected.textContent = 'Wszystkie sklepy';
-      else selected.textContent = shop;
+      if (shop === '') {
+        text.textContent = 'Wszystkie sklepy';
+        logo.src = '/zdj/all.png';
+      }
+
+      if (shop === 'Lidl') {
+        text.textContent = 'Lidl';
+        logo.src = '/zdj/lidl.png';
+      }
+
+      if (shop === 'Biedronka') {
+        text.textContent = 'Biedronka';
+        logo.src = '/zdj/biedronka.png';
+      }
 
       if (!shop) renderProducts(produktyData);
       else renderProducts(produktyData.filter(p => p.sklep === shop));
     }
-    
+
     document.querySelectorAll('.option').forEach(opt => {
      opt.addEventListener('click', () => {
         document.getElementById('dropdown').classList.add('hidden');
