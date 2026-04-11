@@ -1,3 +1,17 @@
+a {
+  margin-bottom: 40px;
+  text-decoration: none;
+  color: #79D6E6;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
@@ -10,6 +24,25 @@ body {
   position: relative;
   min-height: 100vh;
   box-sizing: border-box;
+}
+
+body,
+h1,
+.controls,
+input,
+select,
+button,
+.card,
+.price,
+.shop,
+.selected,
+.dropdown,
+.option,
+a {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              box-shadow 0.4s ease,
+              transform 0.3s ease;
 }
 
 /* LEFT */
@@ -34,54 +67,93 @@ body::after {
   background: linear-gradient(#AFF1D6, #81E8D9);
 }
 
-h1 {
-  margin: 20px 0 15px;
-  font-size: 3.1rem;
-  text-align: center;
+body::before,
+body::after {
+  transition: background 0.4s ease,
+              color 0.4s ease,
+              box-shadow 0.4s ease,
+              transform 0.3s ease;
+}
+
+body.dark {
+  background: #1c2521;
+}
+
+body.dark h1 {
+  color: #79D6E6; 
+}
+
+body.dark a {
   color: #79D6E6;
 }
 
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  justify-content: center;
-  margin-bottom: 40px;
-}
-
-input, select, button {
-  padding: 13px 18px;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: 0.2s;
-  background: #AFF1D6;
+body.dark button {
+  background: #1b2a25;
   color: #79D6E6;
-  font-size: 1.1rem;
+  border: 1px solid #79D6E6;
 }
 
-input:focus {
-  outline: none;
-  transform: scale(1.03);
+body.dark button:hover {
+  box-shadow: 0 0 10px rgba(121, 214, 230, 0.4);
+}
+
+body.dark .card {
+  background: #121816;
+  color: #DFF6DF;
+}
+
+body.dark .dropdown {
+  background: #1a1f1c;
+}
+
+body.dark input,
+body.dark select,
+body.dark .selected {
+  background: #121816;
+  color: #DFF6DF;
+  border: 1px solid #79D6E6;
+}
+
+body.dark .option:hover {
+  background: #2a3a33;
+}
+
+body.dark .price {
+  color: #7de3b1;
+}
+
+body.dark .shop {
+  color: #81E8D9; 
+}
+
+body.dark .status-text {
+  color: #7de3b1;
+}
+
+body.dark .tag {
+  background: #79D6E6;
+  color: #0b0f0d;
+  box-shadow: 0 0 12px #79D6E6;
+}
+
+body.dark::before,
+body.dark::after {
+  opacity: 0.5;
+}
+
+body.dark .theme-btn img {
+  transform: rotate(180deg);
 }
 
 button {
   background: #79D6E6;
   color: #DFF6DF;
+  border: 1px solid #79D6E6;
 }
 
 button:hover {
   background: #81E8D9;
   cursor: pointer;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
-  gap: 25px;
-  max-width: 1200px;
-  width: 100%;
-  padding: 0 25px 50px;
 }
 
 .card {
@@ -101,59 +173,17 @@ button:hover {
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
 }
 
-.price {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #79D6E6;
-  margin: 14px 0;
-}
-
-.shop {
-  font-size: 1.05rem;
-  color: #81E8D9;
-}
-
-.tag {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: #79D6E6;
-  color: #DFF6DF;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
-
-a {
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
   margin-bottom: 40px;
-  text-decoration: none;
-  color: #79D6E6;
-  font-weight: bold;
-  font-size: 1.1rem;
 }
 
 .custom-select {
   position: relative;
   min-width: 240px;
-}
-
-.selected {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 18px;
-  background: #AFF1D6;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  cursor: pointer;
-  color: #79D6E6;
-  font-size: 1.1rem;
-}
-
-.selected img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
 }
 
 .dropdown {
@@ -170,6 +200,54 @@ a {
 
 .dropdown.hidden {
   display: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  min-height: 300px;
+  width: 100%;
+  padding: 0 25px 50px;
+}
+
+.grid .status-text {
+  justify-self: center;
+  align-self: center;
+}
+
+h1 {
+  margin: 20px 0 15px;
+  font-size: 3.1rem;
+  text-align: center;
+  color: #79D6E6;
+}
+
+input, select, button {
+  padding: 13px 18px;
+  border-radius: 10px;
+  border: 1px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: 0.2s;
+  background: #AFF1D6;
+  color: #79D6E6;
+  font-size: 1.1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #79D6E6;
+}
+
+input,
+select,
+.selected {
+  border: 1px solid transparent;
+}
+
+.loading {
+  animation: pulse 1.5s infinite;
 }
 
 .option {
@@ -193,10 +271,64 @@ a {
   color: #79D6E6;
 }
 
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #79D6E6;
+  margin: 14px 0;
+}
+
+.selected {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  background: #AFF1D6;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+  color: #79D6E6;
+  font-size: 1.1rem;
+}
+
+.selected img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.shop {
+  font-size: 1.05rem;
+  color: #81E8D9;
+}
+
+.status-text {
+  font-size: 1.5rem;
+  color: #79D6E6;
+  text-align: center;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.tag {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #79D6E6;
+  color: #DFF6DF;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
 .theme-btn {
   position: fixed;
   top: 20px;
-  right: 270px; /* omija prawy pasek */
+  right: 270px; 
   background: transparent;
   border: none;
   cursor: pointer;
@@ -207,111 +339,4 @@ a {
   width: 20px;
   height: 20px;
   transition: transform 0.4s ease;
-}
-
-body,
-h1,
-.controls,
-input,
-select,
-button,
-.card,
-.price,
-.shop,
-.selected,
-.dropdown,
-.option,
-a {
-  transition: background-color 0.4s ease,
-              color 0.4s ease,
-              box-shadow 0.4s ease,
-              transform 0.3s ease;
-}
-
-body::before,
-body::after {
-  transition: background 0.4s ease,
-              color 0.4s ease,
-              box-shadow 0.4s ease,
-              transform 0.3s ease;
-}
-
-body.dark::before,
-body.dark::after {
-  opacity: 0.5;
-}
-
-body.dark {
-  background: #0b0f0d;
-}
-
-/* teksty */
-body.dark h1 {
-  color: #79D6E6; 
-}
-
-/* inputy */
-input,
-select,
-.selected {
-  border: 1px solid transparent;
-}
-
-body.dark input,
-body.dark select,
-body.dark .selected {
-  background: #121816;
-  color: #DFF6DF;
-  border: 1px solid #79D6E6;
-}
-
-/* przyciski */
-body.dark button {
-  background: #1b2a25;
-  color: #79D6E6;
-  border: 1px solid #79D6E6;
-}
-
-body.dark button:hover {
-  box-shadow: 0 0 10px rgba(121, 214, 230, 0.4);
-}
-
-/* karty */
-body.dark .card {
-  background: #121816;
-  color: #DFF6DF;
-}
-
-/* cena */
-body.dark .price {
-  color: #7de3b1;
-}
-
-/* sklep */
-body.dark .shop {
-  color: #81E8D9; 
-}
-
-/* dropdown */
-body.dark .dropdown {
-  background: #1a1f1c;
-}
-
-body.dark .option:hover {
-  background: #2a3a33;
-}
-
-/* link */
-body.dark a {
-  color: #79D6E6;
-}
-
-body.dark .theme-btn img {
-  transform: rotate(180deg);
-}
-
-body.dark .tag {
-  background: #79D6E6;
-  color: #0b0f0d;
-  box-shadow: 0 0 12px #79D6E6;
 }

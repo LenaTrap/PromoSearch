@@ -37,7 +37,7 @@
   </div>
 
   <div id="produkty" class="grid">
-    <p>Ładowanie produktów...</p>
+    <p class="status-text loading">Ładowanie produktów...</p>
   </div>
 
   <script>
@@ -68,7 +68,7 @@
       renderProducts(produktyData);
     })
     .catch(() => {
-      container.innerHTML = '<p>Błąd pobierania danych!</p>';
+      container.innerHTML = '<p class="status-text">Błąd pobierania danych!</p>';
     });
 
     function renderProducts(data) {
@@ -76,7 +76,7 @@
 
 
       if (data.length === 0) {
-        container.innerHTML = '<p>Brak produktów</p>';
+        container.innerHTML = '<p class="status-text">Błąd pobierania danych!</p>';
         return;
       }
 
