@@ -10,6 +10,7 @@
       font-family: Arial, sans-serif;
       padding: 20px;
       background-color: #f5f5f5;
+      margin: 0;
     }
 
     h1 {
@@ -36,19 +37,25 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
     }
 
     .card {
       background: white;
-      padding: 10px;
+      padding: 15px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .card h3 {
+      margin-top: 0;
       margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -58,7 +65,11 @@
   <h1>Produkty z gazetki</h1>
 
   <div class="controls">
-    <input type="text" placeholder="Szukaj..." oninput="searchProducts(this.value)">
+    <input
+      type="text"
+      placeholder="Szukaj..."
+      oninput="searchProducts(this.value)"
+    >
 
     <button onclick="sortProducts('asc')">Najtańsze</button>
     <button onclick="sortProducts('desc')">Najdroższe</button>
@@ -78,23 +89,17 @@
     let produktyData = [];
     const container = document.getElementById('produkty');
 
-    // 🔥 TWÓJ PUBLICZNY LINK NGROK
-    fetch('https://unestimable-bibi-helically.ngrok-free.dev/produkty', {
-      headers: {
-        "ngrok-skip-browser-warning": "true"
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      produktyData = data;
-      renderProducts(produktyData);
-    })
-    .catch(err => {
-      container.innerHTML = 'Błąd pobierania danych!';
-      console.error(err);
-    });
+    fetch('./produkty.json')
+      .then(res => res.json())
+      .then(data => {
+        produktyData = data;
+        renderProducts(produktyData);
+      })
+      .catch(err => {
+        container.innerHTML = '<p>Błąd pobierania danych!</p>';
+        console.error(err);
+      });
 
-    // Render produktów
     function renderProducts(data) {
       container.innerHTML = '';
 
@@ -109,8 +114,10 @@
 
         card.innerHTML = `
           <h3>${p.nazwa}</h3>
-          <p><strong>${p.cena} zł</strong></p>
-          <p>${p.sklep}</p>
+          <p class="price">${p.cena} zł</p>
+          <p><strong>Sklep:</strong> ${p.sklep}</p>
+          <p><strong>Promocja:</strong> ${p.promocja}</p>
+          <p><strong>Data:</strong> ${p.data_wydania}</p>
           ${p.opis ? `<p>${p.opis}</p>` : ''}
         `;
 
@@ -118,7 +125,6 @@
       });
     }
 
-    // Wyszukiwanie
     function searchProducts(query) {
       const filtered = produktyData.filter(p =>
         p.nazwa.toLowerCase().includes(query.toLowerCase())
@@ -126,23 +132,30 @@
       renderProducts(filtered);
     }
 
-    // Sortowanie
     function sortProducts(order) {
       const sorted = [...produktyData].sort((a, b) =>
-        order === 'asc' ? a.cena - b.cena : b.cena - a.cena
+        order === 'asc'
+          ? pNumber(a.cena) - pNumber(b.cena)
+          : pNumber(b.cena) - pNumber(a.cena)
       );
+
       renderProducts(sorted);
     }
 
-    // Filtrowanie po sklepie
     function filterByShop(shop) {
       if (!shop) {
         renderProducts(produktyData);
       } else {
-        renderProducts(produktyData.filter(p => p.sklep === shop));
+        renderProducts(
+          produktyData.filter(p => p.sklep === shop)
+        );
       }
     }
+
+    function pNumber(value) {
+      return parseFloat(value);
+    }
   </script>
-<a href="/designs/design1.html">Design1</a></p>
+
 </body>
 </html>
