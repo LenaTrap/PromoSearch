@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "nazwa": "Mleko 3.2%",
+    "cena": 3.49,
+    "sklep": "Lidl",
+    "promocja": "10%",
+    "data_wydania": "2026-04-13",
+    "opis": "Promocja tygodnia"
+  },
+  {
+    "id": 2,
+    "nazwa": "Banany",
+    "cena": 4.99,
+    "sklep": "Biedronka",
+    "promocja": "20%",
+    "data_wydania": "2026-04-13",
+    "opis": "Cena za kg"
+  },
+  {
+    "id": 3,
+    "nazwa": "Masło ekstra",
+    "cena": 6.99,
+    "sklep": "Lidl",
+    "promocja": "15%",
+    "data_wydania": "2026-04-13",
+    "opis": "Limit 2 sztuki"
+  }
+]
