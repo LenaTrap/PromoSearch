@@ -22,8 +22,8 @@ body {
   justify-content: flex-start;
   padding-top: 100px;
 
-  padding-left: 250px;
-  padding-right: 250px;
+  padding-left: clamp(40px, 10%, 250px);
+  padding-right: clamp(40px, 10%, 250px);
 
   position: relative;
   min-height: 100vh;
@@ -54,7 +54,7 @@ body::before {
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
+  width: clamp(40px, 10%, 250px);
   height: 100vh;
   background: linear-gradient(#AFF1D6, #81E8D9);
 
@@ -67,7 +67,7 @@ body::after {
   position: fixed;
   top: 0;
   right: 0;
-  width: 250px;
+  width: clamp(40px, 10%, 250px);
   height: 100vh;
   background: linear-gradient(#AFF1D6, #81E8D9);
 
