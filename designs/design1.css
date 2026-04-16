@@ -340,3 +340,73 @@ select,
   height: 20px;
   transition: transform 0.4s ease;
 }
+
+/* ================= MOBILE FIX ================= */
+
+@media (max-width: 768px) {
+
+  body {
+    padding-top: 80px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    padding: 0 10px;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .theme-btn {
+    right: 15px;
+    top: 15px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  input,
+  button,
+  .selected {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .custom-select {
+    width: 100%;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 0 10px 40px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .price {
+    font-size: 1.5rem;
+  }
+
+  .status-text {
+    font-size: 1.2rem;
+    padding: 40px 10px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
