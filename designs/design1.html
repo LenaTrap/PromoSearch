@@ -11,7 +11,7 @@
 
   <h1>Produkty z gazetki</h1>
   <button id="themeToggle" class="theme-btn" onclick="toggleTheme()">
-  <img id="themeIcon" src="/zdj/ksiezyc.png" />
+  <img id="themeIcon" src="zdj/ksiezyc.png" />
   </button>
 
   <div class="controls">
@@ -24,13 +24,13 @@
   <div class="selected" onclick="toggleDropdown()">Wszystkie sklepy</div>
   <div id="dropdown" class="dropdown hidden">
     <div class="option" onclick="filterByShop('')">
-      <img src="/zdj/all.png" /> Wszystkie sklepy
+      <img src="zdj/all.png" /> Wszystkie sklepy
     </div>
     <div class="option" onclick="filterByShop('Lidl')">
-      <img src="/zdj/lidl.png" /> Lidl
+      <img src="zdj/lidl.png" /> Lidl
     </div>
     <div class="option" onclick="filterByShop('Biedronka')">
-      <img src="/zdj/biedronka.png" /> Biedronka
+      <img src="zdj/biedronka.png" /> Biedronka
     </div>
   </div>
 </div>
@@ -50,9 +50,9 @@
       const icon = document.getElementById('themeIcon');
 
       if (darkMode) {
-        icon.src = '/zdj/slonce.png';
+        icon.src = 'zdj/slonce.png';
       } else {
-        icon.src = '/zdj/ksiezyc.png';
+        icon.src = 'zdj/ksiezyc.png';
       }
     }
 
