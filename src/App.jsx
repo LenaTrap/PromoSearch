@@ -1,121 +1,147 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [produktyData, setProduktyData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [query, setQuery] = useState("");
+  const [selectedShop, setSelectedShop] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://unestimable-bibi-helically.ngrok-free.dev/produkty", {
+      headers: { "ngrok-skip-browser-warning": "true" }
+    })
+      .then(res => res.json())
+      .then(data => {
+        setProduktyData(data);
+        setFilteredData(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setFilteredData([]);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+  }, [darkMode]);
+
+  useEffect(() => {
+    let data = [...produktyData];
+
+    if (query) {
+      data = data.filter(p =>
+        p.nazwa.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    if (selectedShop) {
+      data = data.filter(p => p.sklep === selectedShop);
+    }
+
+    setFilteredData(data);
+  }, [query, selectedShop, produktyData]);
+
+  const sortProducts = (order) => {
+    const sorted = [...filteredData].sort((a, b) =>
+      order === "asc" ? a.cena - b.cena : b.cena - a.cena
+    );
+    setFilteredData(sorted);
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+    <div className={darkMode ? "dark" : ""}>
+      <h1>Produkty z gazetki</h1>
+
+      <button
+        className="theme-btn"
+        onClick={() => setDarkMode(!darkMode)}
+      >
+        <img
+          src={darkMode ? "/pic/slonce.png" : "/pic/ksiezyc.png"}
+          alt="theme"
+        />
+      </button>
+
+      <div className="controls">
+        <input
+          type="text"
+          placeholder="Szukaj produktu..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+
+        <button onClick={() => sortProducts("asc")}>
+          ⬇ Najtańsze
         </button>
-      </section>
+        <button onClick={() => sortProducts("desc")}>
+          ⬆ Najdroższe
+        </button>
 
-      <div className="ticks"></div>
+        <div className="custom-select">
+          <div
+            className="selected"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            {selectedShop || "Wszystkie sklepy"}
+          </div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          {dropdownOpen && (
+            <div className="dropdown">
+              <div
+                className="option"
+                onClick={() => {
+                  setSelectedShop("");
+                  setDropdownOpen(false);
+                }}
+              >
+                <img src="/pic/all.png" /> Wszystkie sklepy
+              </div>
+
+              <div
+                className="option"
+                onClick={() => {
+                  setSelectedShop("Lidl");
+                  setDropdownOpen(false);
+                }}
+              >
+                <img src="/pic/lidl.png" /> Lidl
+              </div>
+
+              <div
+                className="option"
+                onClick={() => {
+                  setSelectedShop("Biedronka");
+                  setDropdownOpen(false);
+                }}
+              >
+                <img src="/pic/biedronka.png" /> Biedronka
+              </div>
+            </div>
+          )}
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <div className="grid">
+        {loading ? (
+          <p className="status-text loading">Ładowanie produktów...</p>
+        ) : filteredData.length === 0 ? (
+          <p className="status-text">Błąd pobierania danych!</p>
+        ) : (
+          filteredData.map((p, i) => (
+            <div key={i} className="card">
+              <div className="tag">PROMO</div>
+              <h3>{p.nazwa}</h3>
+              <div className="price">{p.cena} zł</div>
+              <div className="shop">{p.sklep}</div>
+              {p.opis && <p>{p.opis}</p>}
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
 }
-
-export default App
