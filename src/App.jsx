@@ -61,7 +61,7 @@ export default function App() {
         onClick={() => setDarkMode(!darkMode)}
       >
         <img
-          src={darkMode ? "/pic/slonce.png" : "/pic/ksiezyc.png"}
+          src={darkMode ? "pic/slonce.png" : "pic/ksiezyc.png"}
           alt="theme"
         />
       </button>
@@ -98,7 +98,7 @@ export default function App() {
                   setDropdownOpen(false);
                 }}
               >
-                <img src="/pic/all.png" /> Wszystkie sklepy
+                <img src="pic/all.png" /> Wszystkie sklepy
               </div>
 
               <div
@@ -108,7 +108,7 @@ export default function App() {
                   setDropdownOpen(false);
                 }}
               >
-                <img src="/pic/lidl.png" /> Lidl
+                <img src="pic/lidl.png" /> Lidl
               </div>
 
               <div
@@ -118,7 +118,7 @@ export default function App() {
                   setDropdownOpen(false);
                 }}
               >
-                <img src="/pic/biedronka.png" /> Biedronka
+                <img src="pic/biedronka.png" /> Biedronka
               </div>
             </div>
           )}
