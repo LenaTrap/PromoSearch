@@ -1,0 +1,422 @@
+a {
+  margin-bottom: 40px;
+  text-decoration: none;
+  color: #79D6E6;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #DFF6DF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 100px;
+
+  padding-left: clamp(40px, 10%, 250px);
+  padding-right: clamp(40px, 10%, 250px);
+
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+body,
+h1,
+.controls,
+input,
+select,
+button,
+.card,
+.price,
+.shop,
+.selected,
+.dropdown,
+.option,
+a {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              box-shadow 0.4s ease,
+              transform 0.3s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(40px, 10%, 250px);
+  height: 100vh;
+  background: linear-gradient(#AFF1D6, #81E8D9);
+
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: clamp(40px, 10%, 250px);
+  height: 100vh;
+  background: linear-gradient(#AFF1D6, #81E8D9);
+
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before,
+body::after {
+  transition: background 0.4s ease,
+              color 0.4s ease,
+              box-shadow 0.4s ease,
+              transform 0.3s ease;
+}
+
+body.dark {
+  background: #1c2521;
+}
+
+body.dark h1 {
+  color: #79D6E6; 
+}
+
+body.dark a {
+  color: #79D6E6;
+}
+
+body.dark button {
+  background: #1b2a25;
+  color: #79D6E6;
+  border: 1px solid #79D6E6;
+}
+
+body.dark button:hover {
+  box-shadow: 0 0 10px rgba(121, 214, 230, 0.4);
+}
+
+body.dark .card {
+  background: #121816;
+  color: #DFF6DF;
+}
+
+body.dark .dropdown {
+  background: #1a1f1c;
+}
+
+body.dark input,
+body.dark select,
+body.dark .selected {
+  background: #121816;
+  color: #DFF6DF;
+  border: 1px solid #79D6E6;
+}
+
+body.dark .option:hover {
+  background: #2a3a33;
+}
+
+body.dark .price {
+  color: #7de3b1;
+}
+
+body.dark .shop {
+  color: #81E8D9; 
+}
+
+body.dark .status-text {
+  color: #7de3b1;
+}
+
+body.dark .tag {
+  background: #79D6E6;
+  color: #0b0f0d;
+  box-shadow: 0 0 12px #79D6E6;
+}
+
+body.dark::before,
+body.dark::after {
+  opacity: 0.5;
+}
+
+body.dark .theme-btn img {
+  transform: rotate(180deg);
+}
+
+button {
+  background: #79D6E6;
+  color: #DFF6DF;
+  border: 1px solid #79D6E6;
+}
+
+button:hover {
+  background: #81E8D9;
+  cursor: pointer;
+}
+
+.card {
+  background: #B6FBD3;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+  color: #79D6E6;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.custom-select {
+  position: relative;
+  min-width: 240px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: #AFF1D6;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.dropdown.hidden {
+  display: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  min-height: 300px;
+  width: 100%;
+  padding: 0 25px 50px;
+}
+
+.grid .status-text {
+  justify-self: center;
+  align-self: center;
+}
+
+h1 {
+  margin: 20px 0 15px;
+  font-size: 3.1rem;
+  text-align: center;
+  color: #79D6E6;
+}
+
+input, select, button {
+  padding: 13px 18px;
+  border-radius: 10px;
+  border: 1px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: 0.2s;
+  background: #AFF1D6;
+  color: #79D6E6;
+  font-size: 1.1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #79D6E6;
+}
+
+input,
+select,
+.selected {
+  border: 1px solid transparent;
+}
+
+.loading {
+  animation: pulse 1.5s infinite;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  color: #79D6E6;
+}
+
+.option img {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.option:hover {
+  background: #81E8D9;
+  color: #79D6E6;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #79D6E6;
+  margin: 14px 0;
+}
+
+.selected {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  background: #AFF1D6;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+  color: #79D6E6;
+  font-size: 1.1rem;
+}
+
+.selected img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.shop {
+  font-size: 1.05rem;
+  color: #81E8D9;
+}
+
+.status-text {
+  font-size: 1.5rem;
+  color: #79D6E6;
+  text-align: center;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.tag {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #79D6E6;
+  color: #DFF6DF;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.theme-btn {
+  position: fixed;
+  top: 20px;
+  right: 270px; 
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.theme-btn img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.4s ease;
+}
+
+/* ================= MOBILE FIX ================= */
+
+@media (max-width: 768px) {
+
+  body {
+  padding-top: 80px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+  h1 {
+    font-size: 2rem;
+    padding: 0 10px;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .theme-btn {
+    right: 15px;
+    top: 15px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  input,
+  button,
+  .selected {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .custom-select {
+    width: 100%;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 0 10px 40px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .price {
+    font-size: 1.5rem;
+  }
+
+  .status-text {
+    font-size: 1.2rem;
+    padding: 40px 10px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
