@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+const SUPABASE_URL = "https://xtucjfzxwfxnlowjwxgk.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0dWNqZnp4d2Z4bmxvd2p3eGdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDg0NzIsImV4cCI6MjA5MTM4NDQ3Mn0.CpIjKKhbXrNAnEefZYU-4T1jUWI7whpygeiXZggNvQs";
+
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [produktyData, setProduktyData] = useState([]);
@@ -9,9 +12,14 @@ export default function App() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // Fetch data
   useEffect(() => {
-    fetch("https://unestimable-bibi-helically.ngrok-free.dev/produkty", {
-      headers: { "ngrok-skip-browser-warning": "true" }
+    fetch(`${SUPABASE_URL}/rest/v1/produkty`, {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json"
+      }
     })
       .then(res => res.json())
       .then(data => {
@@ -25,10 +33,7 @@ export default function App() {
       });
   }, []);
 
-  useEffect(() => {
-    document.body.classList.toggle("dark", darkMode);
-  }, [darkMode]);
-
+  // Filter logic
   useEffect(() => {
     let data = [...produktyData];
 
@@ -45,6 +50,7 @@ export default function App() {
     setFilteredData(data);
   }, [query, selectedShop, produktyData]);
 
+  // Sort
   const sortProducts = (order) => {
     const sorted = [...filteredData].sort((a, b) =>
       order === "asc" ? a.cena - b.cena : b.cena - a.cena
@@ -56,16 +62,18 @@ export default function App() {
     <div className={darkMode ? "dark" : ""}>
       <h1>Produkty z gazetki</h1>
 
+      {/* Theme Toggle */}
       <button
         className="theme-btn"
         onClick={() => setDarkMode(!darkMode)}
       >
         <img
-          src={darkMode ? "pic/slonce.png" : "pic/ksiezyc.png"}
+          src={darkMode ? "./pic/slonce.png" : "./pic/ksiezyc.png"}
           alt="theme"
         />
       </button>
 
+      {/* Controls */}
       <div className="controls">
         <input
           type="text"
@@ -81,6 +89,7 @@ export default function App() {
           ⬆ Najdroższe
         </button>
 
+        {/* Dropdown */}
         <div className="custom-select">
           <div
             className="selected"
@@ -98,7 +107,7 @@ export default function App() {
                   setDropdownOpen(false);
                 }}
               >
-                <img src="pic/all.png" /> Wszystkie sklepy
+                <img src="./pic/all.png" /> Wszystkie sklepy
               </div>
 
               <div
@@ -108,7 +117,7 @@ export default function App() {
                   setDropdownOpen(false);
                 }}
               >
-                <img src="pic/lidl.png" /> Lidl
+                <img src="./pic/lidl.png" /> Lidl
               </div>
 
               <div
@@ -118,13 +127,14 @@ export default function App() {
                   setDropdownOpen(false);
                 }}
               >
-                <img src="pic/biedronka.png" /> Biedronka
+                <img src="./pic/biedronka.png" /> Biedronka
               </div>
             </div>
           )}
         </div>
       </div>
 
+      {/* Products */}
       <div className="grid">
         {loading ? (
           <p className="status-text loading">Ładowanie produktów...</p>
