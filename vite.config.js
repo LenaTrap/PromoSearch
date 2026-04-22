@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/PromoSearch/' // MUST match your repo name
+  base: '/PromoSearch/' // MUST match repo name exactly
 })
