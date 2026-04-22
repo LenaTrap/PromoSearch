@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromoSearch</title>
-  <link rel="stylesheet" href="design1.css">
+  <link rel="stylesheet" href="designs/design1.css">
 </head>
 
 <body>
 
   <h1>Produkty z gazetki</h1>
   <button id="themeToggle" class="theme-btn" onclick="toggleTheme()">
-  <img id="themeIcon" src="../zdj/ksiezyc.png" />
+  <img id="themeIcon" src="pic/ksiezyc.png" />
   </button>
 
   <div class="controls">
@@ -24,20 +24,20 @@
   <div class="selected" onclick="toggleDropdown()">Wszystkie sklepy</div>
   <div id="dropdown" class="dropdown hidden">
     <div class="option" onclick="filterByShop('')">
-      <img src="../zdj/all.png" /> Wszystkie sklepy
+      <img src="pic/all.png" /> Wszystkie sklepy
     </div>
     <div class="option" onclick="filterByShop('Lidl')">
-      <img src="../zdj/lidl.png" /> Lidl
+      <img src="pic/lidl.png" /> Lidl
     </div>
     <div class="option" onclick="filterByShop('Biedronka')">
-      <img src="../zdj/biedronka.png" /> Biedronka
+      <img src="pic/biedronka.png" /> Biedronka
     </div>
   </div>
 </div>
   </div>
 
   <div id="produkty" class="grid">
-    <p class="status-text loading">Ładowanie produktów...</p>
+    <p class="status-text loading">Ładowanie produktów...</p> 
   </div>
 
   <script>
@@ -50,44 +50,33 @@
       const icon = document.getElementById('themeIcon');
 
       if (darkMode) {
-        icon.src = '../zdj/slonce.png';
+        icon.src = 'pic/slonce.png';
       } else {
-        icon.src = '../zdj/ksiezyc.png';
+        icon.src = 'pic/ksiezyc.png';
       }
     }
-
-    // 🔥 SUPABASE CONFIG
-    const SUPABASE_URL = "https://xtucjfzxwfxnlowjwxgk.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0dWNqZnp4d2Z4bmxvd2p3eGdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDg0NzIsImV4cCI6MjA5MTM4NDQ3Mn0.CpIjKKhbXrNAnEefZYU-4T1jUWI7whpygeiXZggNvQs"; // <- wklej swój klucz
 
     let produktyData = [];
     const container = document.getElementById('produkty');
 
-    // 🔥 POBIERANIE DANYCH Z SUPABASE
-    async function loadData() {
-      try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/produkty?select=*`, {
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization: "Bearer " + SUPABASE_KEY
-          }
-        });
-
-        const data = await res.json();
-        produktyData = data;
-        renderProducts(produktyData);
-      } catch (err) {
-        container.innerHTML = '<p class="status-text">Błąd pobierania danych!</p>';
-      }
-    }
-
-    loadData();
+    fetch('https://unestimable-bibi-helically.ngrok-free.dev/produkty', {
+      headers: { "ngrok-skip-browser-warning": "true" }
+    })
+    .then(res => res.json())
+    .then(data => {
+      produktyData = data;
+      renderProducts(produktyData);
+    })
+    .catch(() => {
+      container.innerHTML = '<p class="status-text">Błąd pobierania danych!</p>';
+    });
 
     function renderProducts(data) {
       container.innerHTML = '';
 
+
       if (data.length === 0) {
-        container.innerHTML = '<p class="status-text">Brak produktów</p>';
+        container.innerHTML = '<p class="status-text">Błąd pobierania danych!</p>';
         return;
       }
 
@@ -96,7 +85,7 @@
         card.className = 'card';
 
         card.innerHTML = `
-          <div class="tag">${p.promocja || 'PROMO'}</div>
+          <div class="tag">PROMO</div>
           <h3>${p.nazwa}</h3>
           <div class="price">${p.cena} zł</div>
           <div class="shop">${p.sklep}</div>
@@ -142,14 +131,15 @@
       else renderProducts(produktyData.filter(p => p.sklep === shop));
     }
 
-    // zamykanie dropdown po wyborze
     document.querySelectorAll('.option').forEach(opt => {
       opt.addEventListener('click', () => {
         document.getElementById('dropdown').classList.add('hidden');
       });
     });
+      if (!shop) renderProducts(produktyData);
+      else renderProducts(produktyData.filter(p => p.sklep === shop));
 
-</script>
+  </script>
 
 </body>
 </html>
