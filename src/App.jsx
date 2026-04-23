@@ -24,16 +24,11 @@ useEffect(() => {
     .then(data => {
       console.log("DATA:", data);
 
-      // 🔥 FIX HERE
-      if (!Array.isArray(data)) {
-        console.error("Not an array!", data);
-        setProduktyData([]);
-        setFilteredData([]);
-      } else {
-        setProduktyData(data);
-        setFilteredData(data);
-      }
+      // ✅ CRASH PROTECTION HERE
+      const safeData = Array.isArray(data) ? data : [];
 
+      setProduktyData(safeData);
+      setFilteredData(safeData);
       setLoading(false);
     })
     .catch(err => {
