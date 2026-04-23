@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const SUPABASE_URL = "https://xtucjfzxwfxnlowjwxgk.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0dWNqZnp4d2Z4bmxvd2p3eGdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDg0NzIsImV4cCI6MjA5MTM4NDQ3Mn0.CpIjKKhbXrNAnEefZYU-4T1jUWI7whpygeiXZggNvQs";
+const SUPABASE_KEY = "klucz";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
