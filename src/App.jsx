@@ -39,12 +39,12 @@ export default function App() {
 
     if (query) {
       data = data.filter(p =>
-        p.nazwa.toLowerCase().includes(query.toLowerCase())
+        p.name.toLowerCase().includes(query.toLowerCase())
       );
     }
 
     if (selectedShop) {
-      data = data.filter(p => p.sklep === selectedShop);
+      data = data.filter(p => p.shop === selectedShop);
     }
 
     setFilteredData(data);
@@ -53,7 +53,7 @@ export default function App() {
   // Sort
   const sortProducts = (order) => {
     const sorted = [...filteredData].sort((a, b) =>
-      order === "asc" ? a.cena - b.cena : b.cena - a.cena
+      order === "asc" ? a.price - b.price : b.price - a.price
     );
     setFilteredData(sorted);
   };
@@ -144,10 +144,10 @@ export default function App() {
           filteredData.map((p, i) => (
             <div key={i} className="card">
               <div className="tag">PROMO</div>
-              <h3>{p.nazwa}</h3>
-              <div className="price">{p.cena} zł</div>
-              <div className="shop">{p.sklep}</div>
-              {p.opis && <p>{p.opis}</p>}
+              <h3>{p.name}</h3>
+              <div className="price">{p.price} zł</div>
+              <div className="shop">{p.shop}</div>
+              <p>Ważne do: {p.valid_to}</p>
             </div>
           ))
         )}
