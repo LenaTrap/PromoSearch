@@ -14,7 +14,7 @@ export default function App() {
 
   // Fetch data
 useEffect(() => {
-  fetch(`${SUPABASE_URL}/rest/v1/promocje?select=*`, {
+  fetch(`${SUPABASE_URL}/rest/v1/public.promocje?select=*`, {
   headers: {
     apikey: SUPABASE_KEY,
     Authorization: `Bearer ${SUPABASE_KEY}`
