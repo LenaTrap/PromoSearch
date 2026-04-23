@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const SUPABASE_URL = "https://xtucjfzxwfxnlowjwxgk.supabase.co";
-const SUPABASE_KEY = "klucz";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0dWNqZnp4d2Z4bmxvd2p3eGdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDg0NzIsImV4cCI6MjA5MTM4NDQ3Mn0.CpIjKKhbXrNAnEefZYU-4T1jUWI7whpygeiXZggNvQs";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -14,12 +14,12 @@ export default function App() {
 
   // Fetch data
 useEffect(() => {
-  fetch(`${SUPABASE_URL}/rest/v1/produkty?select=*`, {
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`
-    }
-  })
+  fetch(`${SUPABASE_URL}/rest/v1/promocje?select=*`, {
+  headers: {
+    apikey: SUPABASE_KEY,
+    Authorization: `Bearer ${SUPABASE_KEY}`
+  }
+})
     .then(res => res.json())
     .then(data => {
       console.log("DATA:", data);
@@ -49,12 +49,12 @@ useEffect(() => {
 
     if (query) {
       data = data.filter(p =>
-        p.name.toLowerCase().includes(query.toLowerCase())
+        p.produkt.toLowerCase().includes(query.toLowerCase())
       );
     }
 
     if (selectedShop) {
-      data = data.filter(p => p.shop === selectedShop);
+      data = data.filter(p => p.strona === selectedShop);
     }
 
     setFilteredData(data);
@@ -63,7 +63,9 @@ useEffect(() => {
   // Sort
   const sortProducts = (order) => {
     const sorted = [...filteredData].sort((a, b) =>
-      order === "asc" ? a.price - b.price : b.price - a.price
+      order === "asc"
+  ? Number(a.cena) - Number(b.cena)
+  : Number(b.cena) - Number(a.cena)
     );
     setFilteredData(sorted);
   };
@@ -154,10 +156,11 @@ useEffect(() => {
           filteredData.map((p, i) => (
             <div key={i} className="card">
               <div className="tag">PROMO</div>
-              <h3>{p.name}</h3>
-              <div className="price">{p.price} zł</div>
-              <div className="shop">{p.shop}</div>
-              <p>Ważne do: {p.valid_to}</p>
+              <h3>{p.produkt}</h3>
+              <div className="price">{p.cena} zł</div>
+              <div className="shop">{p.strona}</div>
+              <p>Stara cena: {p.stara_cena} zł</p>
+              <p>Rabat: {p.rabat}%</p>
             </div>
           ))
         )}
