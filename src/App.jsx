@@ -13,25 +13,35 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   // Fetch data
-  useEffect(() => {
-    fetch(`${SUPABASE_URL}/rest/v1/produkty`, {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
+useEffect(() => {
+  fetch(`${SUPABASE_URL}/rest/v1/produkty?select=*`, {
+    headers: {
+      apikey: SUPABASE_KEY,
+      Authorization: `Bearer ${SUPABASE_KEY}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("DATA:", data);
+
+      // 🔥 FIX HERE
+      if (!Array.isArray(data)) {
+        console.error("Not an array!", data);
+        setProduktyData([]);
+        setFilteredData([]);
+      } else {
         setProduktyData(data);
         setFilteredData(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setFilteredData([]);
-        setLoading(false);
-      });
-  }, []);
+      }
+
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error("FETCH ERROR:", err);
+      setFilteredData([]);
+      setLoading(false);
+    });
+}, []);
 
   // Filter logic
   useEffect(() => {
